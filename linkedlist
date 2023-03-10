@@ -76,8 +76,6 @@ public:
 		{
 			cout << "invalid position" << endl;
 		}
-		
-		
 	}
 	void deletefirst() {
 		if (head == NULL)
