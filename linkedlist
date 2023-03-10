@@ -1,0 +1,192 @@
+#include<iostream>
+using namespace std;
+template <class T>
+class Node
+{
+public:
+	T item;
+	Node<T>* next;
+};
+template <class T>
+class LinkedList
+{
+private:
+	Node<T>* head;
+	Node<T>* tail;
+	int count = 0;
+public:
+	//insertatfirst
+	void insertatfirst(T data)
+	{
+		Node<T>* newnode = new Node<T>;
+		newnode->item = data;
+		//newnode->next = NULL;
+		if (head == NULL)
+		{
+			head = newnode;
+			tail = newnode;
+		}
+		else
+		{
+			newnode->next = head;
+			head = newnode;
+		}
+		count++;
+	}
+	//insertatlast
+	void insertlast(T data) {
+		Node<T>* newnode = new Node<T>;
+		newnode->item = data;
+		if (head == NULL)
+		{
+			head = newnode;
+			tail = newnode;
+		}
+		else
+		{
+			tail->next = newnode;
+			tail = newnode;
+			newnode->next = NULL;
+		}
+		count++;
+	}
+	void insertatpos(int pos,T data) {
+		Node<T>* newnode = new Node<T>;
+		newnode->item = data;
+		if (pos == 1)
+		{
+			insertatfirst(data);
+		}
+		else if (pos == count + 1)
+		{
+			insertlast(data);
+		}
+		else if (pos > 1 && pos <= count)
+		{
+			Node<T>* temp = head;
+			for (int i = 1; i < pos - 1; i++)
+			{
+				temp = temp->next;
+			}
+			newnode->next = temp->next;
+			temp->next = newnode;
+			count++;
+		}
+		else
+		{
+			cout << "invalid position" << endl;
+		}
+		
+		
+	}
+	void deletefirst() {
+		if (head == NULL)
+		{
+			cout << "list is empty" << endl;
+		}
+		else
+		{
+			Node<T>* temp = head;
+			head = head->next;
+			delete temp;
+		}
+		count--;
+	}
+	void deletelast() {
+		if (head == NULL)
+		{
+			cout << "list is empty" << endl;
+		}
+		else
+		{
+			Node<T>* temp = head;
+			while (temp->next != tail)
+			{
+				temp = temp->next;
+			}
+			delete tail;
+			tail = temp;
+			tail->next = NULL;
+		}
+		count--;
+	}
+	void deleteatpos(int pos) {
+		if (head == NULL)
+		{
+			cout << "list is empty" << endl;
+		}
+		if (pos == 1) {
+			deletefirst();
+		}
+		else if (pos == count)
+		{
+			deletelast();
+		}
+		else if (pos > 0 && pos < count)
+		{
+			Node<T>* temp = head;
+			for (int i = 1; i < pos - 1; i++)
+			{
+				temp = temp->next;
+			}
+			Node<T>* temp2 = temp->next;
+			temp->next = temp2->next;
+			delete temp2;
+			count--;
+		}
+		else
+		{
+			cout << "invalid position" << endl;
+		}
+		
+	}
+	void deleteafteritem(T data) {
+		if (head == NULL)
+		{
+			cout << "list is empty" << endl;
+		}
+		else
+		{
+			Node<T>* temp = head;
+			while (temp->item != data) {
+				temp = temp->next;
+			}
+			Node<T>* temp2 = temp->next;
+			temp->next = temp2->next;
+			delete temp2;
+			
+		}
+		count--;
+	}
+	void display() {
+		Node<T>* temp = head;
+		while (temp != NULL)
+		{
+			cout << temp->item << " ";
+			temp = temp->next;
+		}
+		cout << endl;
+	}
+	
+};
+
+int main() {
+	LinkedList<int>list;
+	list.insertatfirst(10);
+	list.insertatfirst(20);
+	list.insertatfirst(30);
+	list.insertatfirst(40);
+	list.insertatfirst(50);
+	list.insertatpos(5,1);
+	//list.deleteatpos(4);
+//	list.deleteafteritem(30);
+	list.display();
+	//list.insertatpos(2);
+	//list.display();
+	
+	
+	
+	
+	
+}
+
